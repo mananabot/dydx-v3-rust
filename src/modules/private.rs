@@ -641,7 +641,7 @@ impl Private<'_> {
         };
     }
 
-    fn sign(
+    pub fn sign(
         &self,
         request_path: &str,
         method: &str,
