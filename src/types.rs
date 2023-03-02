@@ -41,34 +41,30 @@ pub struct KeyPairWithYCoordinate<'a> {
     pub private_key: &'a str,
 }
 
-#[non_exhaustive]
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct OrderSide;
-
-impl OrderSide {
-    pub const BUY: &'static str = "BUY";
-    pub const SELL: &'static str = "SELL";
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+pub enum OrderSide {
+    Buy,
+    Sell,
 }
 
 #[non_exhaustive]
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct OrderType;
-
-impl OrderType {
-    pub const MARKET: &'static str = "MARKET";
-    pub const LIMIT: &'static str = "LIMIT";
-    pub const STOP_LIMIT: &'static str = "STOP_LIMIT";
-    pub const TRAILING_STOP: &'static str = "TRAILING_STOP";
-    pub const TAKE_PROFIT: &'static str = "TAKE_PROFIT";
+#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+pub enum OrderType {
+    Market,
+    Limit,
+    StopLimit,
+    TrailingStop,
+    TakeProfit,
 }
 
 #[non_exhaustive]
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct TimeInForce;
-impl TimeInForce {
-    pub const GTT: &'static str = "GTT";
-    pub const FOK: &'static str = "FOK";
-    pub const IOC: &'static str = "IOC";
+pub enum TimeInForce {
+    GTT,
+    FOK,
+    IOC,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
