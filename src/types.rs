@@ -479,6 +479,14 @@ pub struct PositionsResponse {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+pub enum PositionStatus {
+    Open,
+    Closed,
+    Liquidated,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PositionResponseObject {
     // pub market: Market;
