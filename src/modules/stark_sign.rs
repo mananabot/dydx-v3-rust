@@ -2,15 +2,16 @@ use pyo3::prelude::*;
 use pyo3::types::PyList;
 use std::fs;
 use std::path::Path;
+use crate::types::OrderSide;
 
 pub fn sign_order(
     network_id: usize,
     market: &str,
-    side: &str,
+    side: OrderSide,
     position_id: &str,
-    human_size: &str,
-    human_price: &str,
-    limit_fee: &str,
+    human_size: f64,
+    human_price: f64,
+    limit_fee: f64,
     client_id: &str,
     expiration_epoch_seconds: i64,
     private_key: &str,
@@ -28,7 +29,7 @@ pub fn sign_order(
             (
                 network_id,
                 market,
-                side,
+                side.to_string(),
                 position_id,
                 human_size,
                 human_price,

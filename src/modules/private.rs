@@ -161,7 +161,7 @@ impl Private {
         response
     }
 
-    pub async fn create_order(&self, user_params: ApiOrderParams<'_>) -> Result<OrderResponse> {
+    pub async fn create_order(&self, user_params: ApiOrderParams) -> Result<OrderResponse> {
         let client_id = if user_params.client_id.is_some() {
             user_params.client_id.unwrap().to_owned()
         } else {
@@ -170,9 +170,9 @@ impl Private {
 
         let signature = sign_order(
             self.network_id,
-            user_params.market,
-            user_params.side,
-            user_params.position_id,
+            &user_params.market,
+            user_params.side.clone(),
+            &user_params.position_id,
             user_params.size,
             user_params.price,
             user_params.limit_fee,
@@ -199,9 +199,9 @@ impl Private {
             cancel_id: user_params.cancel_id,
             trigger_price: user_params.trigger_price,
             trailing_percent: user_params.trailing_percent,
-            expiration: expiration_second.as_str(),
-            client_id: client_id.as_str(),
-            signature: signature.as_str(),
+            expiration: expiration_second,
+            client_id: client_id,
+            signature: signature,
         };
 
         let response = self

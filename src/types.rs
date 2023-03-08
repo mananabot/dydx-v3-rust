@@ -48,6 +48,15 @@ pub enum OrderSide {
     Sell,
 }
 
+impl std::fmt::Display for OrderSide {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            OrderSide::Buy => write!(f, "BUY"),
+            OrderSide::Sell => write!(f, "SELL"),
+        }
+    }
+}
+
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum PositionSide {
@@ -516,47 +525,47 @@ pub struct PositionResponseObject {
 
 #[derive(Debug, Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
-pub struct ApiOrder<'a> {
-    pub market: &'a str,
-    pub side: &'a str,
+pub struct ApiOrder {
+    pub market: String,
+    pub side: OrderSide,
     #[serde(rename = "type")]
-    pub type_field: &'a str,
-    pub time_in_force: &'a str,
+    pub type_field: OrderType,
+    pub time_in_force: TimeInForce,
     pub post_only: bool,
-    pub size: &'a str,
-    pub price: &'a str,
-    pub limit_fee: &'a str,
+    pub size: f64,
+    pub price: f64,
+    pub limit_fee: f64,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub cancel_id: Option<&'a str>,
+    pub cancel_id: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub trigger_price: Option<&'a str>,
+    pub trigger_price: Option<f64>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub trailing_percent: Option<&'a str>,
-    pub expiration: &'a str,
-    pub client_id: &'a str,
-    pub signature: &'a str,
+    pub trailing_percent: Option<f64>,
+    pub expiration: String,
+    pub client_id: String,
+    pub signature: String,
 }
 
 #[derive(Debug, Clone, Serialize)]
-pub struct ApiOrderParams<'a> {
-    pub position_id: &'a str,
-    pub market: &'a str,
-    pub side: &'a str,
+pub struct ApiOrderParams {
+    pub position_id: String,
+    pub market: String,
+    pub side: OrderSide,
     #[serde(rename = "type")]
-    pub type_field: &'a str,
-    pub size: &'a str,
-    pub price: &'a str,
-    pub time_in_force: &'a str,
+    pub type_field: OrderType,
+    pub size: f64,
+    pub price: f64,
+    pub time_in_force: TimeInForce,
     pub post_only: bool,
-    pub limit_fee: &'a str,
+    pub limit_fee: f64,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub client_id: Option<&'a str>,
+    pub client_id: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub cancel_id: Option<&'a str>,
+    pub cancel_id: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub trigger_price: Option<&'a str>,
+    pub trigger_price: Option<f64>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub trailing_percent: Option<&'a str>,
+    pub trailing_percent: Option<f64>,
     pub expiration: i64,
 }
 
