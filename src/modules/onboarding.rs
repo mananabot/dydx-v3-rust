@@ -7,15 +7,20 @@ use serde::Serialize;
 use std::time::Duration;
 
 #[derive(Debug, Clone)]
-pub struct Onboarding<'a> {
+pub struct Onboarding {
     client: reqwest::Client,
-    host: &'a str,
+    host: String,
     network_id: usize,
-    eth_private_key: &'a str,
+    eth_private_key: String,
 }
 
-impl Onboarding<'_> {
-    pub fn new<'a>(host: &'a str, network_id: usize, api_timeout: u64, eth_private_key: &'a str) -> Onboarding<'a> {
+impl Onboarding {
+    pub fn new(
+        host: String,
+        network_id: usize,
+        api_timeout: u64,
+        eth_private_key: String,
+    ) -> Onboarding {
         Onboarding {
             client: reqwest::ClientBuilder::new()
                 .timeout(Duration::from_secs(api_timeout))
@@ -43,7 +48,7 @@ impl Onboarding<'_> {
             self.network_id,
             ethereum_address,
             action,
-            self.eth_private_key,
+            &self.eth_private_key,
         )
         .unwrap();
         let stark_private_key = derive_stark_private_key(signature).unwrap();
@@ -59,7 +64,7 @@ impl Onboarding<'_> {
             self.network_id,
             ethereum_address,
             action,
-            self.eth_private_key,
+            &self.eth_private_key,
         )
         .unwrap();
         let sig_str = signature.as_str();
@@ -90,7 +95,7 @@ impl Onboarding<'_> {
             self.network_id,
             ethereum_address,
             action,
-            self.eth_private_key,
+            &self.eth_private_key,
         )
         .unwrap();
 

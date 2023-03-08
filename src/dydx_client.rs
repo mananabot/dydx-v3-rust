@@ -7,36 +7,36 @@ use crate::modules::private::Private;
 use crate::modules::public::Public;
 
 #[derive(Debug)]
-pub struct ClientOptions<'a> {
+pub struct ClientOptions {
     pub network_id: Option<usize>,
     pub api_timeout: Option<u64>,
-    pub api_key_credentials: Option<ApiKeyCredentials<'a>>,
-    pub stark_private_key: Option<&'a str>,
-    pub eth_private_key: Option<&'a str>,
+    pub api_key_credentials: Option<ApiKeyCredentials>,
+    pub stark_private_key: Option<String>,
+    pub eth_private_key: Option<String>,
 }
 
 #[readonly::make]
 #[derive(Debug, Clone)]
-pub struct DydxClient<'a> {
+pub struct DydxClient {
     #[readonly]
     pub api_timeout: Option<u64>,
-    pub public: Public<'a>,
-    pub private: Option<Private<'a>>,
-    pub eth_private: Option<EthPrivate<'a>>,
-    pub onboarding: Option<Onboarding<'a>>,
+    pub public: Public,
+    pub private: Option<Private>,
+    pub eth_private: Option<EthPrivate>,
+    pub onboarding: Option<Onboarding>,
 }
 
-impl DydxClient<'_> {
-    pub fn new<'a>(host: &'a str, _options: ClientOptions<'a>) -> DydxClient<'a> {
+impl DydxClient {
+    pub fn new(host: String, _options: ClientOptions) -> DydxClient {
         let network_id = _options.network_id.unwrap_or(1);
         let api_timeout = _options.api_timeout.unwrap_or(10);
         DydxClient {
             api_timeout: None,
-            
-            public: Public::new(host, api_timeout),
+
+            public: Public::new(host.clone(), api_timeout),
             private: match _options.api_key_credentials {
                 Some(v) => Some(Private::new(
-                    host,
+                    host.clone(),
                     network_id,
                     api_timeout,
                     v,
@@ -44,10 +44,8 @@ impl DydxClient<'_> {
                 )),
                 None => None,
             },
-            eth_private: match _options.eth_private_key {
-                Some(v) => Some(EthPrivate::new(
-                    host, network_id, api_timeout,v,
-                )),
+            eth_private: match _options.eth_private_key.clone() {
+                Some(v) => Some(EthPrivate::new(host.clone(), network_id, api_timeout, v)),
                 None => None,
             },
             onboarding: match _options.eth_private_key {
