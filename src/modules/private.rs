@@ -182,7 +182,8 @@ impl Private {
         )
         .unwrap();
 
-        let naive = NaiveDateTime::from_timestamp(user_params.expiration, 0);
+        let naive = NaiveDateTime::from_timestamp_opt(user_params.expiration, 0)
+            .expect("Invalid expiration");
         let datetime: DateTime<Utc> = DateTime::from_utc(naive, Utc);
         let expiration_second = datetime.format("%Y-%m-%dT%H:%M:%S%.3fZ").to_string();
 
@@ -227,7 +228,8 @@ impl Private {
         )
         .unwrap();
 
-        let naive = NaiveDateTime::from_timestamp(user_params.expiration, 0);
+        let naive = NaiveDateTime::from_timestamp_opt(user_params.expiration, 0)
+            .expect("Invalid expiration");
         let datetime: DateTime<Utc> = DateTime::from_utc(naive, Utc);
         let expiration_second = datetime.format("%Y-%m-%dT%H:%M:%S%.3fZ").to_string();
 
@@ -261,7 +263,8 @@ impl Private {
         )
         .unwrap();
 
-        let naive = NaiveDateTime::from_timestamp(user_params.expiration, 0);
+        let naive = NaiveDateTime::from_timestamp_opt(user_params.expiration, 0)
+            .expect("Invalid expiration");
         let datetime: DateTime<Utc> = DateTime::from_utc(naive, Utc);
         let expiration_second = datetime.format("%Y-%m-%dT%H:%M:%S%.3fZ").to_string();
 
@@ -312,7 +315,8 @@ impl Private {
         )
         .unwrap();
 
-        let naive = NaiveDateTime::from_timestamp(user_params.expiration, 0);
+        let naive = NaiveDateTime::from_timestamp_opt(user_params.expiration, 0)
+            .expect("Invalid expiration");
         let datetime: DateTime<Utc> = DateTime::from_utc(naive, Utc);
         let expiration_second = datetime.format("%Y-%m-%dT%H:%M:%S%.3fZ").to_string();
 
