@@ -532,8 +532,8 @@ pub struct ApiOrder {
     pub type_field: OrderType,
     pub time_in_force: TimeInForce,
     pub post_only: bool,
-    pub size: f64,
-    pub price: f64,
+    pub size: String,
+    pub price: String,
     pub limit_fee: f64,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub cancel_id: Option<String>,
